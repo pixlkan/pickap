@@ -1,0 +1,819 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pickap | Hyperlocal Delivery Reimagined</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed-variant": "#474646",
+                        "on-secondary-fixed-variant": "#005320",
+                        "tertiary-container": "#adabab",
+                        "surface": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-primary": "#4ae176",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#004b1e",
+                        "surface-tint": "#006e2f",
+                        "on-primary-fixed": "#002109",
+                        "on-surface": "#191c1e",
+                        "primary-container": "#22c55e",
+                        "surface-container": "#eceef0",
+                        "secondary-container": "#7cf994",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed-dim": "#62df7d",
+                        "inverse-surface": "#2d3133",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#7ffc97",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed-dim": "#4ae176",
+                        "secondary": "#006e2d",
+                        "on-secondary": "#ffffff",
+                        "primary": "#22c55e",
+                        "surface-container-highest": "#e0e3e5",
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#3d4a3d",
+                        "outline": "#6d7b6c",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#bccbb9",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#403f3f",
+                        "on-primary-fixed-variant": "#005321",
+                        "primary-fixed": "#6bff8f",
+                        "on-secondary-fixed": "#002109",
+                        "tertiary-fixed": "#e5e2e1",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#007230",
+                        "tertiary": "#5f5e5e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "20px",
+                        "xxl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-desktop": "40px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        .glass-card-dark {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .iridescent-border {
+            position: relative;
+        }
+        .iridescent-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(45deg, #22c55e, #6bff8f, #4ae176, #22c55e);
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0.3;
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        .hover-3d {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        .hover-3d:hover {
+            transform: perspective(1000px) rotateX(4deg) rotateY(4deg);
+        }
+        .floating-mockup {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        #main-header {
+            transition: all 0.3s ease;
+        }
+        #main-header.scrolled {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .tracking-simulation {
+            position: relative;
+            height: 4px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .tracking-bar {
+            position: absolute;
+            height: 100%;
+            background: #22c55e;
+            width: 0%;
+            animation: track 4s infinite ease-in-out;
+        }
+        @keyframes track {
+            0% { width: 0%; left: 0; }
+            50% { width: 40%; left: 30%; }
+            100% { width: 0%; left: 100%; }
+        }
+
+        .form-container {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .form-hidden {
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+        .form-visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden selection:bg-primary/20">
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/10 bg-white/70 transition-all duration-300" id="main-header">
+<nav class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="flex items-center group" href="#home">
+<img alt="Pickap Logo" class="h-12 w-auto object-contain transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApQrft_2U4vd4gagLLCNvHJohF-0vMaII7D6bPqLCbkrMjl7_qOQ5VAXSTsFgDOZ6v3oFR2wDE_jOi9ZbapGFYtjdQ635x6fhpyHALdw0IULkfu43MjOBSj2EdaE5I-BsA8YBwusOjHSZwPpYSU14jivp1wTAq6lzTNzVvsFtIQdx5SvmoctHwU1_0AMTi5QIvbW_DS16tTC6WmUh9ajcHQSozEp7Y5dosxeDgbVR0Z0AnLNJbgWHGH_VKX_H5nrWmIyLu3s8PhAXDuQ">
+</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#home">Home</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#services">Services</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#features">Features</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#partner-section">Partner</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="terms.html">Terms & Policy</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#timeline">Timeline</a>
+<a class="font-label-md text-on-surface hover:text-primary transition-colors" href="#team">Team</a>
+</div>
+<div class="flex gap-4 items-center">
+<!-- <a class="font-label-md text-on-surface hover:text-primary transition-colors px-4 py-2 rounded-lg hover:bg-primary/5" href="#login-form">Login</a> -->
+<a class="bg-primary text-white px-6 py-3 rounded-xl font-label-md font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 active:scale-95 transition-all" href="#login-form">Login</a>
+</div>
+</nav>
+</header>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden" id="home" style="height: 130vh;">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center z-0" style="background-image: url('https://i.ibb.co/7tQ2Lcv4/hero.png')"></div>
+<div class="absolute inset-0 bg-black/40 z-10"></div></div>
+<div class="relative z-10 text-center px-margin-mobile max-w-5xl">
+<div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-8 scroll-reveal visible">
+<span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-white font-label-sm uppercase tracking-widest">Now serving 50+ areas</span>
+</div>
+<h1 class="font-display-lg text-white text-5xl md:text-[80px] mb-stack-md leading-[1.1] tracking-tight drop-shadow-2xl scroll-reveal visible">
+            Your Favorite Food,<br><span class="text-primary italic">Delivered Faster.</span>
+</h1>
+<p class="font-body-lg text-xl mb-stack-lg text-white/80 max-w-2xl mx-auto scroll-reveal visible">
+            Experience the magic of hyperlocal delivery. Fresh food, groceries, and essentials at your doorstep in under 25 minutes.
+        </p>
+<div class="flex flex-col sm:flex-row gap-stack-md justify-center items-center scroll-reveal visible">
+<a class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-xxl font-label-md text-lg transition-all shadow-2xl hover:-translate-y-1" href="https://play.google.com/store/apps/details?id=com.pickap&pcampaignid=web_share" target="_blank">Download App</a>
+<!-- <button class="glass-card-dark text-white px-10 py-5 rounded-xxl font-label-md text-lg transition-all hover:bg-white/10">Explore Services</button> -->
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
+<span class="text-xs uppercase tracking-widest font-bold">Scroll</span>
+<div class="w-px h-12 bg-gradient-to-b from-white/50 to-transparent"></div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="py-20 bg-surface -mt-20 relative z-20">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="glass-card !bg-white p-12 rounded-[40px] grid grid-cols-2 md:grid-cols-4 gap-gutter text-center border-none">
+<div class="scroll-reveal visible">
+<div class="text-4xl md:text-5xl font-extrabold text-on-surface mb-2">10k+</div>
+<div class="text-on-surface-variant font-label-md">Happy Customers</div>
+</div>
+<div class="scroll-reveal visible">
+<div class="text-4xl md:text-5xl font-extrabold text-on-surface mb-2">1K+</div>
+<div class="text-on-surface-variant font-label-md">Local Partners</div>
+</div>
+<div class="scroll-reveal visible">
+<div class="text-4xl md:text-5xl font-extrabold text-on-surface mb-2">25min</div>
+<div class="text-on-surface-variant font-label-md">Avg. Delivery</div>
+</div>
+<div class="scroll-reveal visible">
+<div class="text-4xl md:text-5xl font-extrabold text-on-surface mb-2">4.9</div>
+<div class="text-on-surface-variant font-label-md">User Rating</div>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-24 bg-surface" id="services">
+<div class="max-w-container-max mx-auto px-margin-desktop grid md:grid-cols-2 gap-20 items-center">
+<div class="relative scroll-reveal visible">
+<div class="absolute -top-10 -left-10 w-72 h-72 bg-primary/10 rounded-full blur-[100px]"></div>
+<div class="relative z-10 hover-3d" style="transform: perspective(1000px) rotateX(0deg) rotateY(0deg);">
+<div class="absolute -inset-4 bg-primary/10 rounded-[48px] rotate-3"></div>
+<img alt="App Preview" class="relative z-10 h-auto drop-shadow-2xl rounded-[32px] border-8 border-inverse-surface !w-[70%] mx-auto" src="https://i.ibb.co/Lhvdyz2j/appui.jpg"></div>
+<div class="absolute -bottom-6 -right-6 glass-card p-6 rounded-xxl shadow-xl z-20 scroll-reveal visible">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<div class="font-bold text-lg leading-tight">Fastest Delivery</div>
+<div class="text-sm opacity-70">Under 25 minutes</div>
+</div>
+</div>
+</div>
+</div>
+<div class="scroll-reveal visible">
+<span class="text-primary font-label-md uppercase tracking-[0.2em] mb-4 block">Hyperlocal Expertise</span>
+<h2 class="font-headline-lg text-5xl mb-stack-md text-on-surface leading-tight">Everything You Need,<br>Delivered Locally</h2>
+<p class="text-on-surface-variant mb-stack-lg font-body-lg leading-relaxed">Pickap bridges the gap between your local favorites and your doorstep. We specialize in rapid delivery of essentials from your neighborhood sellers, ensuring freshness and speed that generic platforms can't match.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-stack-lg">
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-label-md">Farm-fresh Produce</span>
+</div>
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-label-md">Premium Meat Cuts</span>
+</div>
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-label-md">Gourmet Bakery</span>
+</div>
+<div class="flex items-center gap-4 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-label-md">Chilled Beverages</span>
+</div>
+</div>
+<!-- <button class="bg-primary text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl transition-all">Learn More</button> -->
+</div>
+</div>
+</section>
+<!-- Dynamic Grid: What We Deliver -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16 scroll-reveal visible">
+<h2 class="font-headline-lg text-4xl mb-4">What We Deliver</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">A wide range of categories curated for your daily urban lifestyle.</p>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Featured Large Card -->
+<div class="md:col-span-8 relative rounded-xxl overflow-hidden group cursor-pointer h-[400px] hover-lift scroll-reveal visible">
+<img alt="Food" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLuSaHAZ39xVfoOxC2TOnJS1LyoaftnBoqwxipszccQFvJHDsu7zEAZwvFXAHfGQIzTOrvlCkKOckLhrLwPjp6iILYJon8MBAZmaV3BmV1W7A2HZJhRXwR5bF7sPgOhmyybStbwUV_B95xQ5ExjttgIpv9OxENJXdVJaRUJ0DUem1SWx7eqzr2CTrvHj0Nb-cg7qq2Y6ElopH8vXaONAh9L6SGeKnoigFZKDmXYBvXClqk5ZsJ-3v9RKXOE">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10">
+<h3 class="text-white font-display-lg text-4xl mb-2">Foods</h3>
+<p class="text-white/80 max-w-md">Hot and fresh meals from your favorite local restaurants, delivered with care.</p>
+</div>
+</div>
+<div class="md:col-span-4 relative rounded-xxl overflow-hidden group cursor-pointer h-[400px] hover-lift scroll-reveal visible">
+<img alt="Beverages" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLteHA8ct2yRhMLZbixOExTMTWFFoktmXL3F3miuZhKhSvc-K359M9y6jclr3oBcocBuaTZcdEZnmwe_ZcfDr7pJzbVIRT4W4sIEfLd730IHB0yiWlhjjkmAEelSS_UpzoBu03qyEGu_2Z51GhBqXStWUC-vAuT2MsyMzLXWBsKc1sJKdojiGxgFUMJNk2mq1WwrqrD0i7r0wiPjDqigWpoRkuWcRaA3THCCJP_iwp2bU41tUsJEqf2V5pc">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+<h3 class="text-white font-headline-lg text-2xl mb-1">Fresh Juices</h3>
+<p class="text-white/80 text-sm">Refreshing juices &amp; beverages.</p>
+</div>
+</div>
+<div class="md:col-span-4 relative rounded-xxl overflow-hidden group cursor-pointer h-[350px] hover-lift scroll-reveal visible">
+<img alt="Bakery" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLtJcoTGWOTywvo1b5BEEYNUPuHssZ8Vkt9eHhVLnYCQNU6yImG7qmlPlNAUxe1hMWN5Ci_i-hIQEuEiVmcyPT2yokF_TbLst1qhO-5xj8kMGxMr0VqHiNjIHuqOb0syor2tr5rFbhgN4hfRhYdHVEy-4KIZgO4p8MwFuQCGXJWXw2iJosWwvY_hV0iL92kLpwruw7-FZh1KmCWBH24Vwh-jPF5GgZV_Do9T4RMIhUxssxLGFtbgqHOKUv0">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+<h3 class="text-white font-headline-lg text-2xl mb-1">Sweets & Bakery</h3>
+<p class="text-white/80 text-sm">Artisanal breads and pastries.</p>
+</div>
+</div>
+<div class="md:col-span-4 relative rounded-xxl overflow-hidden group cursor-pointer h-[350px] hover-lift scroll-reveal visible">
+<img alt="Meat" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLtI_BOvngLRM5fMiH26fR87Plp0635Q81k7rdO99b0lbSyN9h9EvEvEHpaB9Zu7YQx_wIqN9C6bYYWuwMyGPB4oQITOnxhoRhuU7OmG5DJrciF21ZlOxE3Nw5nOIt7FuuqLmp6pBt66ZpqCGVJindKM5v39n5gPRWWyKj8P4PJZPQQljF5bCNqUD48-2uNQ8aejMc62j8FgedAEIqp_2BRDAHNSdgU8s4hcXg79WUYHyaqqNWUNHvP06Q">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+<h3 class="text-white font-headline-lg text-2xl mb-1">Fish & Meats</h3>
+<p class="text-white/80 text-sm">Quality meat &amp; seafood.</p>
+</div>
+</div>
+<div class="md:col-span-4 relative rounded-xxl overflow-hidden group cursor-pointer h-[350px] hover-lift scroll-reveal visible">
+<img alt="Fruits" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLs97vLvQgakPkslagTr-bmZd-uDEvOUDegfvnfJ0uvPpQw0HwfXWqKkalQav0vXoW7Qj6BK9cZ885kD9l5zupaLbOFkJkTrx_KKq69xp72-D293ySPinGj4w0ZKUFL6q_KNGIDIeGwv0M99eLYxG0RWXOn0fevwMlGs3pm_fWUohe2VuS5vnrCoturYCaxPFjeULd7OinaxrvffvAJ27OvJR0WkRbr71TQH_W_VOnSI2eannmijL7IZXQw">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+<h3 class="text-white font-headline-lg text-2xl mb-1">Organic Fruits & Vegetables</h3>
+<p class="text-white/80 text-sm">Farm fresh selection.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-24 bg-inverse-surface relative overflow-hidden" id="features">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px]"></div>
+<div class="max-w-container-max mx-auto px-margin-desktop grid md:grid-cols-2 gap-20 items-center">
+<div class="scroll-reveal order-2 md:order-1 visible">
+<span class="text-primary font-label-md uppercase tracking-[0.2em] mb-4 block">Smart Ecosystem</span>
+<h2 class="font-headline-lg text-white text-5xl mb-8 leading-tight">Advanced Features<br>for Urban Living</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-card-dark p-8 rounded-xxl hover:border-primary/50 transition-all group cursor-pointer scroll-reveal visible">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">wallet</span>
+<h6 class="font-bold text-white text-lg">In-App Wallet</h6>
+<p class="text-white/50 text-sm mt-2">Instant one-click payments.</p>
+</div>
+<div class="glass-card-dark p-8 rounded-xxl hover:border-primary/50 transition-all group cursor-pointer scroll-reveal visible">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">location_on</span>
+<h6 class="font-bold text-white text-lg">Live Tracking</h6>
+<div class="tracking-simulation mt-4 mb-2"><div class="tracking-bar"></div></div>
+<p class="text-white/50 text-sm">Real-time GPS updates.</p>
+</div>
+<div class="glass-card-dark p-8 rounded-xxl hover:border-primary/50 transition-all group cursor-pointer scroll-reveal visible">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">history</span>
+<h6 class="font-bold text-white text-lg">Smart History</h6>
+<p class="text-white/50 text-sm mt-2">Reorder in seconds.</p>
+</div>
+<div class="glass-card-dark p-8 rounded-xxl hover:border-primary/50 transition-all group cursor-pointer scroll-reveal visible">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">support_agent</span>
+<h6 class="font-bold text-white text-lg">24/7 Support</h6>
+<p class="text-white/50 text-sm mt-2">Always here to help.</p>
+</div>
+</div>
+</div>
+<div class="relative order-1 md:order-2 flex justify-center scroll-reveal visible">
+<div class="relative w-[320px] floating-mockup">
+<div class="relative z-10 bg-[#121212] rounded-[50px] p-3 border-[10px] border-white/5 shadow-[0_0_80px_rgba(34,197,94,0.15)] aspect-[9/19] overflow-hidden">
+<img alt="App UI" class="w-full h-full object-cover rounded-[38px]" src="https://i.ibb.co/RkcZByVz/ui1.jpg">
+</div>
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-[60px]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Timeline Journey -->
+<section class="py-24 bg-surface" id="timeline">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-4xl text-center mb-20 scroll-reveal visible">The Pickap Journey</h2>
+<div class="relative max-w-4xl mx-auto">
+<div class="absolute left-1/2 top-0 bottom-0 w-1 bg-primary/10 -translate-x-1/2 hidden md:block"></div>
+<div class="space-y-16">
+<!-- Year 1 -->
+<div class="relative flex flex-col md:flex-row items-center gap-10 scroll-reveal visible">
+<div class="md:w-1/2 text-right hidden md:block">
+<div class="glass-card p-8 rounded-xxl inline-block">
+<span class="text-primary font-bold text-2xl">2023</span>
+<h4 class="font-headline-md text-xl mt-2">Humble Beginnings</h4>
+<p class="text-on-surface-variant mt-2 text-sm">Launched with 5 riders in downtown, focusing on fresh produce.</p>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white z-10 hidden md:block"></div>
+<div class="md:w-1/2 md:hidden">
+<div class="glass-card p-8 rounded-xxl">
+<span class="text-primary font-bold text-xl">2023</span>
+<h4 class="font-headline-md mt-1">Humble Beginnings</h4>
+<p class="text-on-surface-variant text-sm mt-2">Launched with 5 riders in downtown, focusing on fresh produce.</p>
+</div>
+</div>
+<div class="md:w-1/2"></div>
+</div>
+<!-- Year 2 -->
+<div class="relative flex flex-col md:flex-row items-center gap-10 scroll-reveal visible">
+<div class="md:w-1/2"></div>
+<div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white z-10 hidden md:block"></div>
+<div class="md:w-1/2">
+<div class="glass-card p-8 rounded-xxl inline-block text-left">
+<span class="text-primary font-bold text-2xl">2024</span>
+<h4 class="font-headline-md text-xl mt-2">Expansion Era</h4>
+<p class="text-on-surface-variant mt-2 text-sm">Reached 10 cities and added restaurant/grocery modules.</p>
+</div>
+</div>
+</div>
+<!-- Future -->
+<div class="relative flex flex-col md:flex-row items-center gap-10 scroll-reveal visible">
+<div class="md:w-1/2 text-right hidden md:block">
+<div class="glass-card !bg-primary p-8 rounded-xxl inline-block text-white">
+<span class="font-bold text-2xl opacity-80">Future</span>
+<h4 class="font-headline-md text-xl mt-2">AI &amp; Drones</h4>
+<p class="opacity-90 mt-2 text-sm">Deploying autonomous logistics for sub-10 minute deliveries.</p>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white z-10 hidden md:block"></div>
+<div class="md:w-1/2 md:hidden">
+<div class="glass-card !bg-primary p-8 rounded-xxl text-white">
+<span class="font-bold text-xl opacity-80">Future</span>
+<h4 class="font-headline-md mt-1">AI &amp; Drones</h4>
+<p class="opacity-90 text-sm mt-2">Deploying autonomous logistics for sub-10 minute deliveries.</p>
+</div>
+</div>
+<div class="md:w-1/2"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- App in Action (Authentic Screenshots) -->
+<section class="py-24 bg-surface-container-low overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center mb-16 scroll-reveal visible">
+<h2 class="font-headline-lg text-4xl mb-4">See the App in Action</h2>
+<p class="text-on-surface-variant">The most intuitive hyperlocal interface ever designed.</p>
+</div>
+<div class="flex gap-8 overflow-x-auto pb-12 px-margin-desktop snap-x no-scrollbar scroll-reveal visible">
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Login" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1YL1Z0OXltUxRx4BmQSrMpQnyVqqCkvN8JcwsXkPGoH2poGkigdNG1YSu7iDpqwUWJWLghkcT0PXsXD2wgUcaeZ7Z-zmfXqRQUuQU6UTai8R96xf9nLQuemop65Jp5oiDBHjqahjUK1Ub0q8RSwT_zQzYounNQJVc7P5IeUFloMTip33FAC0Ast2kS2Osc_EA4ND6s09fNZt1OLECIbiTnBeCQfaZsmUZtSwmlweBNeWTES2Vw6z556ZVeaGpnOpfdWVUQcTFxow">
+<p class="text-center mt-6 font-bold">Secure Login</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Home" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2zQYQ60fX7HJ8N6qeM_5GpBsWAvjfuiTc9vyZehI0apb5tTQ9A6BR2FwfSd-bOdL8r7N0KEAICSK3p_o8q6ULBnj7YNA8q_D_BeqMhxgqfxjKQVPVmBmwxN6DZK03aezgfsoH6z00bVeqbQG61FkX_fk7Thj08dS_jmDUyo6q6alwv8McDobrNKekVgHAr1T2LArFTjeBRCl6G3yoMw5Gy_2WYYpblwPRUijC3Kflcyy1rnNdDLbj7AtiOH25RrEokbwCtH-9vVU">
+<p class="text-center mt-6 font-bold">Smart Categories</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Restaurants" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdDd3DlYpAbZIaggsldfGFH9Nin6aTTXqR5P0SwNdZ1Tq22NVZkw9YwTtX909FHSEDJJUuz7GWW7wSXEoZvhUGYiIMCdfkDUSm1bRQuW0qXsEELVtYUHHr7Gr9IYwSDt-AHaqfZfu0-hD01E_f5qxOYMljQ3CGDpT85Bc1dDMXT1rvF6nt0Yi4AVRG-OyGSRoafqEHKCbOQJF1Er2oDkhoVmnNe5c1eBXt8IrvQ8LoA4u8aTn7L1291xlFCLP_9kd5Q4-NFH3asks">
+<p class="text-center mt-6 font-bold">Local Partners</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Menu" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHr8ShRKJ9FTeVv8QXi270haK69w3U688PO1EmeH1WTLQ1HAsZH3s35xImIyDjZTWrD02zC4pikmyOOslASWIAlMeBRzne9GkpoGW2yQ9dRWxJxgS6t7RV8EEQ-PNtSOl-CkA_NiKK0-wERJLI5kSaUJSuHSrK9hYID7nc621UBY5Q-qzR_LVxIVlcqXPzTaQ0vsyUYKvl0Chl6PmQL7AOgcJpkMf064WR6O2NSVOgS-igslQFQvJhC1unhvKo06HBTRZ8KSkRJao">
+<p class="text-center mt-6 font-bold">Gourmet Menus</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Cart" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAui8j702s2DrCoF62f7pVaoxuW4qvdfKVygTY-_yXTvOLrl06M_YOI2cxt_9dRpu8kr0FK4utG1ST-QQWsyovZ8vp0zkBlkvihQ0uyLpykTEFa2hMElj1ReitBrPhPPGa1f9ixdon7uYEuS6Jum6AhbkPLEEtH25JWRsYrKk2n5fZVLoPHe7JwgdSWHTmonSUmj5WJDxJYg8jP31uugX6iWYfeeqbZCViiBns72DHOAW4LJYnYjmbMeVsVIWQx1QdDQhHigZwVP2I">
+<p class="text-center mt-6 font-bold">Quick Cart</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Map" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5iEQE-Ak0oE3KyhE3X-9X-LfwTH7fkm0xLLEAx4ykTmTWLPCXjurBP7kyJDTBXgrOz-bo_4raipt-jEfwVZ_vBMnuzaKTupjnQe1a_Uwt4473KEyVsjfQ9eSJXrJo_8BpJ2Ra8NPWzMOYwNtkDrt3swConJxQe6hlbABHu7cRjyCbGZZY52M2Et0cr0sYw-ZZmDm2vGweyr7GXXNh6iNtgJwZOrXyYg1y5MfJPDRYsU6kxAMZKPl8_WvwicxYPGHwhDTblJm8w-I">
+<p class="text-center mt-6 font-bold">Live Map</p>
+</div>
+<div class="flex-shrink-0 w-64 snap-center group">
+<img alt="Orders" class="w-full rounded-[32px] shadow-2xl border-4 border-white transition-all group-hover:-translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdAHm5MzWkbahRkexiCY8S-_iN8PHKsnHdH_3ruNCJv7_OuRfrM59xiLRrqxBco_iO2YObM5-yz4mrJs2Da1ZFMSTpMykWoNzeilQNyVlu0cduw9iqdaJ_XFbc9WtJt_-mle6HRCIhOZM4eWenW4ktA-Kgsi5xxWDvI9tLOX4rhpaOqCQn4_-is9awRrPl6v7GKk_tuzL4nU9CUgPwAlxq47XR7gxq9NppOfJrwFwrZsSxig927Dztl_AKVHQFaPEjvWqXCFBDDe0">
+<p class="text-center mt-6 font-bold">History</p>
+</div>
+</div>
+</section>
+<!-- Join the Fleet -->
+<!-- Team Section -->
+<section class="py-24 bg-surface" id="team">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-4xl text-center mb-16 scroll-reveal visible">Minds Behind Pickap</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="text-center group scroll-reveal hover-lift visible">
+<div class="w-56 h-56 mx-auto rounded-[40px] overflow-hidden mb-6 border-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Sarah" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnevQPCjO8Vfgvgesdbugmub_LaIZIuK-XPV5-EO8IFn4y_3yVLeE5yV5MmE8X_nkOf6upZ53urM_QuLJcpGo5h2bhO7QjaV64bSGx97I0oy07RCxloZhekVu_VAXBdyMc5xlT3teO_Ix8JrMZYFdU1ddfAcwYM7FvOoyacPjMLWQ-oigq1Oniue2qWJyC7hdhn2ipOVqrhuvvrnFv2DotxeuLDeKkz3WL86-isiPSVxavQcBUlICAQ-ZmxN_XkHsTj_4J1Fx5qxw">
+</div>
+<h4 class="font-bold text-xl">Gopal Palanisamy</h4>
+<p class="text-primary font-label-md">Founder</p>
+</div>
+<div class="text-center group scroll-reveal hover-lift visible">
+<div class="w-56 h-56 mx-auto rounded-[40px] overflow-hidden mb-6 border-4 border-transparent group-hover:border-primary transition-all">
+<img alt="David" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmCeMc37Y1KotUujYNYOSwr8Tnw9D3vxlehoCQhdYVfpHcAkYGMWzCgsIzw9AhVaY8tJdpeQJx9--kVTVvmuf6vQiFrBiE3A6_O2mh-x4yOYOBo77qRgur-ScHGl5zrJkJoQyMnXzSe5fdjT9WjL4m8TiQtAjBUfAwY2093olEinqAgeitI22GEzPQa9bmPsTCFCvI47OnfBZGOBo5sZpaZ1aKoKsf0XY1VeprODjLbtkc9n9eedUvWw29j20G_yxMJF-b72NY93U">
+</div>
+<h4 class="font-bold text-xl">Thangavel</h4>
+<p class="text-primary font-label-md">CTO &amp; Co founder</p>
+</div>
+<div class="text-center group scroll-reveal hover-lift visible">
+<div class="w-56 h-56 mx-auto rounded-[40px] overflow-hidden mb-6 border-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Marcus" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhD5jdoskkunG4xaXrhZEyDrZCYlbp944lbqDR2WufQMmYiEuftMzL7uDJf5DVoTJL57sxqIFVDptOe0fFZ1UGcF57HV1zvQ2ZzPlgm7BRqVFB1OjYFGS48K8jNMbAui0OJ_LZ8rcurNkP8ztGfG-su05DMjGVxhdKX2rHOio73Tc18C3pyYwe3-pdNatxlXp1gtIYuRx7swvRCV5CXlUEl_JJiPxzeXQ0HT2eXkIfaTEqvI2G5XvnpTWfrTBX85lgC-SKqGTdRkE">
+</div>
+<h4 class="font-bold text-xl">Meiyarasu</h4>
+<p class="text-primary font-label-md">Operations Director</p>
+</div>
+<div class="text-center group scroll-reveal hover-lift visible">
+<div class="w-56 h-56 mx-auto rounded-[40px] overflow-hidden mb-6 border-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Elena" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiFGENLdrsAPtxaKZbYFJt388BvIIsdhSg4T8sj3vqDXygYAig8kergPEKD4u2WSKrmoMyA_FtUEMjBxWirx_Dm7hOtFXBg-b2dKO7J2ulxE9N6WIZEOOUS1L-rpPh_GTJkX6sMVYiqOCfT_rHU7IWlSZ64GoPKW58tKLVbUm6U-rI7_Z2q46PmV2uDXsv4AyiXQeHtoMdq2DkB5fZkl6K3eamok_MY5FPQpP8oepb9JCyp_caYGazgu1VfMGwvg772nsYjazT4g">
+</div>
+<h4 class="font-bold text-xl">Kannan</h4>
+<p class="text-primary font-label-md">Head of HR DEPT</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Premium Authentication Section -->
+<section class="py-24 bg-surface-container-low overflow-hidden scroll-reveal visible" id="partner-section">
+<div class="max-w-container-max mx-auto px-margin-desktop grid md:grid-cols-2 gap-20 items-center">
+<!-- Left Illustration Montage -->
+<div class="relative h-[600px] hidden md:flex items-center justify-center">
+<!-- Background Elements -->
+<div class="absolute w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+<!-- Main Rider Image -->
+<div class="relative z-20 transform hover:scale-105 transition-transform duration-700">
+<img alt="Delivery Partner" class="w-[480px] h-auto drop-shadow-[0_20px_50px_rgba(34,197,94,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxnYddRd3j8V-jgbr6g8nFdKgzZNQ6Z9b_4yhe12ROTsUsKprOuMGtDKxCiordGgc9yvHXVHI_v6NMVIVs3cph8tTJilXmQ7Un6YepZbmA2ks5PbiK8nV47Kn-c9UzJaNRvgHlxWkRuabhkHx4zBlUS-Vo6fH4mBDyyA7-EVZ5ifkj7NRhunVTatpVWgFaS8GIfMOh7lHm50T5aApQTvwWXg_-pzM1sQ5cZRwzL4NxRfWNT25je_ls4kRDMQM9XTjZeSYBlFl4M3U">
+</div>
+<!-- Floating Badges -->
+<div class="absolute top-20 right-10 bg-white p-4 rounded-xxl shadow-2xl flex items-center gap-3 animate-bounce" style="animation-duration: 4s">
+<div class="w-10 h-10 bg-secondary-container flex items-center justify-center rounded-full text-secondary">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">New Restaurant</p>
+<p class="text-[10px] text-on-surface-variant">Live in your area</p>
+</div>
+</div>
+<div class="absolute bottom-20 left-10 bg-white p-4 rounded-xxl shadow-2xl flex items-center gap-3 animate-bounce" style="animation-duration: 5s">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded-full text-on-primary-container">
+<span class="material-symbols-outlined">shopping_basket</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Fresh Groceries</p>
+<p class="text-[10px] text-on-surface-variant">Fast delivery</p>
+</div>
+</div>
+</div>
+<!-- Right Authentication Card -->
+<div class="relative min-h-[600px] flex items-center">
+<div class="glass-card !bg-white/80 p-8 md:p-12 rounded-[40px] w-full max-w-md mx-auto border-white shadow-2xl relative overflow-hidden">
+<!-- Login Form -->
+<div class="form-container form-visible" id="login-form">
+<div class="text-center mb-8">
+<h2 class="font-headline-lg text-3xl mb-2">PICKAP LOGIN</h2>
+<p class="text-on-surface-variant">Enter your details to Enter</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-semibold mb-2">Mobile Number</label>
+<input class="w-full bg-surface px-6 py-4 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="e.g. +91 9876543210" type="text">
+</div>
+<div>
+<div class="flex justify-between mb-2 ml-1">
+<label class="text-sm font-semibold">Password</label>
+<a class="text-sm text-primary font-bold hover:underline" href="#">Forgot Password?</a>
+</div>
+<input class="w-full bg-surface px-6 py-4 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="••••••••" type="password">
+</div>
+<div class="flex items-center gap-2 mb-2 ml-1">
+<input class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" id="remember" type="checkbox">
+<label class="text-sm text-on-surface-variant" for="remember">Remember me</label>
+</div>
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all transform active:scale-95" type="submit">Login</button>
+</form>
+<div class="mt-8 pt-8 border-t border-outline-variant/20 text-center">
+<p class="text-on-surface-variant">Partner with Us? <button class="text-primary font-bold hover:underline cursor-pointer ml-1" onclick="toggleAuthForms()">Register Now</button></p>
+</div>
+</div>
+<!-- Partner Registration Form -->
+<div class="form-container form-hidden" id="register-form">
+<div class="text-center mb-8">
+<h2 class="font-headline-lg text-3xl mb-2">Become a Partner</h2>
+<p class="text-on-surface-variant text-sm">Join Pickap as a Seller and grow with us</p>
+</div>
+<div class="flex flex-wrap gap-2 mb-8 justify-center">
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Fast Onboarding</div>
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Flexible Earnings</div>
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Business Growth</div>
+</div>
+<form class="space-y-4">
+<div>
+<label class="block text-sm font-semibold mb-1 ml-1">Full Name</label>
+<input class="w-full bg-surface px-6 py-3.5 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Enter your name" type="text">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold mb-1 ml-1">Mobile</label>
+<input class="w-full bg-surface px-6 py-3.5 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Mobile" type="tel">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1 ml-1">Email</label>
+<input class="w-full bg-surface px-6 py-3.5 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Email" type="email">
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1 ml-1">Partner Type</label>
+<select class="w-full bg-surface px-6 py-3.5 rounded-xl border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none">
+<!-- <option value="delivery">Delivery Partner</option> -->
+<option value="seller">Seller / Restaurant Partner</option>
+</select>
+</div>
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all transform active:scale-95 mt-4" type="submit">Sign Up</button>
+</form>
+<div class="mt-8 pt-8 border-t border-outline-variant/20 text-center">
+<p class="text-on-surface-variant">Already registered? <button class="text-primary font-bold hover:underline cursor-pointer ml-1" onclick="toggleAuthForms()">Login</button></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Download Footer CTA -->
+<section class="py-24 px-margin-desktop">
+<div class="max-w-container-max mx-auto bg-inverse-surface rounded-[48px] p-12 md:p-24 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12 scroll-reveal visible">
+<div class="relative z-10 text-white max-w-xl">
+<h2 class="font-display-lg text-5xl mb-6"><span class="text-primary">Get the App Now.</span></h2>
+<p class="text-white/60 font-body-lg mb-12">Download the app today and get 50% off on your first order using code <span class="text-white font-bold">PICKAP50</span>.</p>
+<div class="flex flex-wrap gap-4">
+<a class="hover:opacity-90 transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]" href="#">
+<img alt="Download on the App Store" class="h-14 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-K4zjuYtGUB25X-v1d4bVY1jHf4Bkob-kwEmklVyCFvhqKDxSnJpaFayZCkJxJ3X8dysibNBVlULqhdtJMGhMhgEQWeyMFv-428OwdIhceEImJj2iB8_EG5W5b9uIaY1Rvtbse2MBwtZUiedOIzpK2nrWu4NUcfBNBJ3ELjurK3FQ_cVWijvImYOxYwb4f7UZQTibbFwC4HSbmpmW6IeMaZxIXMDrzKH_hsbUWaX3gGoErQK1TSw66Rg5GA5Hhyc9iOPfWToDNjc">
+</a>
+<a class="hover:opacity-90 transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]" href="https://play.google.com/store/apps/details?id=com.pickap&amp;pcampaignid=web_share">
+<img alt="Get it on Google Play" class="h-14 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHyT3KrT01pVrGtCqTRUM45mBMApY40E63nBCSCRyjyE4euKFCL9WgSE-VqghJECnLB4wtKWPwTcJis9CeVPP6DX8AGtk25-RPxlahdCQ6RCxSXPrMFlXFdQzpdmIfmQfjWrceqo_dTIuTzLPNcdfm-J0MuAd2YCe-yy_rKjXYv7wBcL9OebQpnCf-_gIC346VpZSBa9UxEnImA7wPHgpR-Y3C6-ikEFYVCvBc_GGMmuqARELNX1VT36RId82Uy5WRHsd6dv52K4E" target="_blank">
+</a>
+</div>
+</div>
+<div class="relative z-10 p-4 bg-white rounded-[40px] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+<div class="bg-white p-4">
+<img alt="QR Code" class="w-48 h-48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7ua5sI5RwWUr3hIbDIY8qpxmeeSqUSGzQ2DSb04HIic_vY83FIcN2Lghx1bEJ9fib3r0gqy4hgpDqjIKvOi1tW3bkxIQ_vtNBtrLEmDEJzQiiI0uNVS2StzRss6cfItDABU9AtV7UFfccjcUFZxspZQRVZo8F6V3AyYMFdcs_WHWOpxHR2hKwbWGA7c5NqZck-uMKITdCKJYdGjw-xp8QvJbWNeeAuyixdb_GQR8HLV14s315IdJIVciD5mEAmWj7HBl-paYACzo" target="_blank">
+</div>
+<p class="text-center text-sm text-black font-bold mt-2">Scan to Download</p>
+</div>
+<div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px]"></div>
+</div>
+</section>
+<!-- Footer -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="glass-card !bg-white p-12 md:p-20 rounded-[48px] flex flex-col md:flex-row items-center justify-between gap-12 border-none shadow-xl">
+<div class="max-w-2xl">
+<span class="text-primary font-label-md uppercase tracking-[0.2em] mb-4 block">Grow with Pickap</span>
+<h2 class="font-headline-lg text-4xl md:text-5xl mb-6 text-on-surface">Partner with us and reach more customers</h2>
+<p class="text-on-surface-variant font-body-lg mb-8">Join thousands of local businesses already growing their revenue through our premium delivery network. We provide the tools, you provide the taste.</p>
+<div class="flex flex-wrap gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+<span class="font-label-md">150% Avg. Growth</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<span class="font-label-md">Verified Logistics</span>
+</div>
+</div>
+</div>
+<div class="flex-shrink-0">
+<a class="inline-block bg-primary text-white px-10 py-5 rounded-xxl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-1 transition-all active:scale-95" href="seller.html" target="_blank">Register as Partner</a>
+</div>
+</div>
+</div>
+</section><footer class="py-20 border-t border-outline-variant/10 bg-[#121212] text-white">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<span class="text-primary font-label-md uppercase tracking-[0.2em] mb-4 block">Cities we covered</span>
+<span class="font-label-md">Nalgonda | Rasipuram | Karur | Trichengode</span>
+<br>
+&nbsp;
+<hr>
+&nbsp;
+&nbsp;
+
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-20">
+<div class="md:col-span-4">
+<img alt="Logo" class="h-10 mb-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP4te5cRpEiQ3zB24JX8bvu8BglxmHpVMO4ZRG_cF71yrcpr0CR1agw6uPoyKljA1ehF7sNIDtNgJbpdydxH9de4dh7Ar8jvS55ISRFmrf8FVw7aRgTNoFVWOvdyNoaqmfMpdMjUuC6_9rzAc3tknWtOKsEXj62XXBGH9ObRP2-mq3qT7RY1Yd3suRgQ90TQs-9sHIR8WjuTrFuLFKJAeuAq3Lyk549Ek56A_jK8CqLZf3jJe3sIkMvc1fvrZ_1YknhWQ5OivN6Uw">
+<p class="text-white/70 font-body-md max-w-sm mb-8 leading-relaxed">Redefining hyperlocal logistics through speed, freshness, and unparalleled customer service in your neighborhood.</p>
+<!-- <div class="flex gap-4">
+<a class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all bg-white/10" href="#"><span class="material-symbols-outlined">star</span></a>
+<a class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all bg-white/10" href="#"><span class="material-symbols-outlined">public</span></a>
+</div> -->
+<div class="flex gap-4">
+  <!-- Instagram -->
+  <a class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all bg-white/10" href="https://www.instagram.com/pickapindia/" aria-label="Instagram" target="_blank">
+    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all bg-white/10" href="#" aria-label="Facebook" target="_blank">
+    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+  </a>
+</div>
+</div>
+<div class="md:col-span-2">
+<h6 class="font-bold mb-8 text-lg">Company</h6>
+<ul class="space-y-4 text-white/70">
+<li class=""><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="terms.html" target="_blank">Terms & Privacy policy</a></li>
+</ul>
+</div>
+<div class="md:col-span-2">
+<h6 class="font-bold mb-8 text-lg">Services</h6>
+<ul class="space-y-4 text-white/70">
+<li class=""><a class="hover:text-primary transition-colors" href="#">Food Delivery</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Groceries</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Become Partner</a></li>
+</ul>
+</div>
+<div class="md:col-span-4">
+<h6 class="font-bold mb-8 text-lg">Newsletter</h6>
+<p class="text-white/70 mb-6">Stay updated with our latest offers.</p>
+<div class="flex gap-2">
+<input class="bg-white/10 border border-white/20 text-white rounded-xl px-6 py-3 flex-1 focus:ring-2 focus:ring-primary" placeholder="Email" type="email">
+<button class="bg-primary text-white p-3 rounded-xl"><span class="material-symbols-outlined">send</span></button>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-white/10 text-center text-white/50 text-sm">© 2026 Pickap India Service. All Rights Reserved.</div>
+</div>
+</footer>
+<script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // Scroll Reveal Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Dynamic 3D Card Hover Effect
+    document.querySelectorAll('.hover-3d').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+    });
+
+    // Auth Form Toggle Logic
+    function toggleAuthForms() {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        
+        if (loginForm.classList.contains('form-visible')) {
+            loginForm.classList.remove('form-visible');
+            loginForm.classList.add('form-hidden');
+            
+            setTimeout(() => {
+                registerForm.classList.remove('form-hidden');
+                registerForm.classList.add('form-visible');
+            }, 50);
+        } else {
+            registerForm.classList.remove('form-visible');
+            registerForm.classList.add('form-hidden');
+            
+            setTimeout(() => {
+                loginForm.classList.remove('form-hidden');
+                loginForm.classList.add('form-visible');
+            }, 50);
+        }
+    }
+</script>
+
+
+</body></html>
